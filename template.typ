@@ -1,6 +1,7 @@
 // The project function defines how your document looks.
 // It takes your content and some metadata and formats it.
 // Go ahead and customize it to your liking!
+#import "@preview/anti-matter:0.1.1": anti-matter, fence, set-numbering
 #let project(
   title: "",
   subtitle: "",
@@ -18,7 +19,9 @@
 ) = {
   // Set the document's basic properties.
   set document(author: authors, title: title)
-  set page(numbering: "1", number-align: center)
+  show: anti-matter
+  set-numbering(none)
+  //set page(numbering: "1", number-align: center)
   set text(font: "Liberation Sans", lang: "de")
   set heading(numbering: "1.1")
 
@@ -62,11 +65,14 @@ align(left)[
     #heading(
       outlined: false,
       numbering: none,
-      text(smallcaps[Wirtschaftsprojekt an der Hochschule Luzern – Informatik]),
+      //text(smallcaps[Wirtschaftsprojekt an der Hochschule Luzern – Informatik]),
+      text(smallcaps[Bacherlorarbeit an der Hochschule Luzern – Informatik]),
+
     )#v(10pt)
     #strong[Titel: #title]#linebreak() \
     #strong[Student: ]#str(authors.at(0)) \ #v(10pt)
-    #strong[Student: ]#str(authors.at(1)) \ #v(10pt)
+    // If there are two authors, display the second one.
+    //#strong[Student: ]#str(authors.at(1)) \ #v(10pt)
     #strong[Studiengang: ]#studiengang \ #v(10pt)
     #strong[Jahr: ]#datetime.today().display("[year]") \ #v(10pt)
     #strong[Betreuer: ]#betreuer \ #v(10pt)
@@ -75,6 +81,13 @@ align(left)[
     #strong[Codierung / Klassifizierung der Arbeit: ]\ #text([⊠ Öffentlich □ Vertraulich]) \ #v(10pt)
     #text(strong([Eidesstattliche Erklärung:])) #text([Ich erkläre hiermit, dass wir die vorliegende Arbeit selbständig und ohne unerlaubte fremde Hilfe angefertigt haben, alle verwendeten Quellen, Literatur und andere Hilfsmittel angegeben haben, wörtlich oder inhaltlich entnommene Stellen als solche kenntlich gemacht haben, das Vertraulichkeitsinteresse des Auftraggebers wahren und die Urheberrechtsbestimmungen der Hochschule Luzern respektieren werden.]) \ #v(10pt)
     #strong[Ort / Datum, Unterschrift: ]#box(line(length: 5cm)) \ #v(10pt)
+    // If there are two authors, display the second one.
+    //#strong[Ort / Datum, Unterschrift: ]#box(line(length: 5cm)) \ #v(10pt)
+
+    // Portfoliodb paragraph only for bachelor thesis
+    #strong[Abgabe der Arbeit auf der Portfolio Datenbank:] \
+    #text[Bestätigungsvisum Studentin/Student] \
+    #text[Ich bestätige, dass ich die Bachelorarbeit korrekt gemäss Merkblatt auf der Portfolio Datenbank abgelegt habe. Die Verantwortlichkeit sowie die Berechtigungen habe ich abgegeben, so dass ich keine Änderungen mehr vornehmen kann oder weitere Dateien hochladen kann.] \ #v(10pt)
     #strong[Ort / Datum, Unterschrift: ]#box(line(length: 5cm)) \ #v(10pt)
     #strong[Ausschliesslich bei Abgabe in gedruckter Form:] \ 
     #strong[Eingangsvisum durch das Sekretariat auszufüllen] \ #v(10pt)
@@ -84,6 +97,7 @@ align(left)[
   pagebreak()
 
   // Abstract page.
+  set-numbering("I")
   v(1fr)
 align(center)[
     #heading(
@@ -98,8 +112,8 @@ align(center)[
 
   // Table of contents.
   outline(depth: 3, indent: true)
+  fence()
   pagebreak()
-
   // Main body.
   set par(justify: true)
 

@@ -1,6 +1,7 @@
 #import "template.typ": *
-#import "@preview/acrostiche:0.3.0": *
-#import "@preview/i-figured:0.1.0"
+#import "@preview/acrostiche:0.3.1": *
+#import "@preview/i-figured:0.2.4"
+#import "@preview/anti-matter:0.1.1": anti-matter, fence, set-numbering
 
 #set heading(numbering: "1.")
 #show heading: i-figured.reset-counters
@@ -11,7 +12,7 @@
 // to customize this template and discover how it works.
 #show: project.with(
   title: "",
-  subtitle: "Wirtschaftsprojekt HS2023",
+  subtitle: "Bacherlorarbeit",
   authors: (
     "",
     ""
@@ -31,59 +32,36 @@
 
 #init-acronyms((
   "Wipro": ("Wirtschaftsprojekt",),
+  "BAA": ("Bacherlorarbeit",),
 ))
 
-= Problem, Fragestellung und Vision
-== Problem
-== Fragestellung
-== Vision
+#include "chapters/01_introduction.typ"
+#include "chapters/02_state-of-research.typ"
+#include "chapters/03_concept.typ"
+#include "chapters/04_methodology.typ"
+#include "chapters/05_realization.typ"
+#include "chapters/06_evaluation.typ"
+#include "chapters/07_conclusion.typ"
+
+#fence()
 #pagebreak()
 
-= Stand der Technik
-== Technologische Grundlagen
-== Technische Konzepte
-// TODO Konzepte in diesem Feld welche für den Leser relevant sind
-== Stand in Bezug auf eigenes Projekt
-// TODO Welche Forschung wurde in jüngster Zeit gemacht welche relevant für das eigene Projekt sind
+#set heading(numbering: none)
+
+= Glossar
+#print-index(title: [])
 #pagebreak()
 
-= Ideen und Konzepte
-== Grundidee
-== Konzepte
+= Abbildungsverzeichnis
+#i-figured.outline(title: [])
+= Tabellenverzeichnis
+#i-figured.outline(title: [], target-kind: table,)
 #pagebreak()
 
-= Methoden
-== Vorgehensmodell
-== Labor-/Feldexperiment
-== Ermittlung offener Projektrahmenbedingungen
-== Projektanforderungen / Anforderungsanalyse
-== Einschränkungen und Abgrenzungen
-== Systemarchitektur
-== Komponentendesign
-== Umsetzung / Programmierung
-== Testing
-#pagebreak()
-
-= Realisierung
-#pagebreak()
-
-= Evaluation und Validation
-== Vergleich mit Anforderungen
-== Technische Aspekte
-== Vorgehen
-#pagebreak()
-
-= Ausblick
-== Projekt Fazit
-== Ausblick
-#pagebreak()
-
-#set heading(numbering: none, outlined: false)
-#print-index(title: [Glossar])
-
-#pagebreak()
-#i-figured.outline(title: [Abbildungsverzeichnis])
-#i-figured.outline(title: [Tabellenverzeichnis], target-kind: table,)
-
-#pagebreak()
 #bibliography(title: [Literatur], "Referenzen.bib", style: "american-psychological-association")
+#pagebreak()
+
+// reset the numbering for the appendix
+#counter(heading).update(0)
+#set heading(numbering: "A.")
+#include "chapters/a_appendix.typ"
