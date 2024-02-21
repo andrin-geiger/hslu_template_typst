@@ -1,6 +1,9 @@
 name: Build Typst document
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   build_typst_documents:
     runs-on: ubuntu-latest
@@ -8,7 +11,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Typst
-        uses: lvignoli/typst-action@main
+        uses: lvignoli/typst-action@v0
         with:
-          source_file: Wipro_Typst_Template.typ
-
+          source_file: Typst_Template.typ
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDFs
+          path: Typst_Template.pdf
+      - name: Get current date
+        id: date
+        run: echo "DATE=$(date +%Y-%m-%d-%H:%M)" >> $GITHUB_ENV
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: github.ref_type == 'tag'
+        with:
+          name: "${{ github.ref_name }} — ${{ env.DATE }}"
+          files: "*.pdf"
