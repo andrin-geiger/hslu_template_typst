@@ -9,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Typst
-        uses: lvignoli/typst-action@v0
-        with:
-          source_file: Typst_Template.typ
+        uses: typst-community/setup-typst@v3
+      - run: typst compile Typst_Template.typ Typst_Template.pdf
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
